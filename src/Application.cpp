@@ -26,25 +26,6 @@ void Application::main_loop()
 {
     while (this->game_window->is_open())
     {
-        int mouse_x;
-        int mouse_y;
-        SDL_GetMouseState(&mouse_x, &mouse_y);
-        while (SDL_PollEvent(&this->event) > 0)
-        {
-            switch (event.type)
-            {
-                case SDL_QUIT:
-                {
-                    this->game_window->close();
-                    break;
-                }
-                case SDL_MOUSEBUTTONDOWN:
-                {
-                    world->check_mouse_click({mouse_x, mouse_y});
-                }
-            }
-        }
-
         this->update();
         this->draw();
     }
@@ -52,8 +33,24 @@ void Application::main_loop()
 
 void Application::update()
 {
-
-    
+    int mouse_x;
+    int mouse_y;
+    SDL_GetMouseState(&mouse_x, &mouse_y);
+    while (SDL_PollEvent(&this->event) > 0)
+    {
+        switch (event.type)
+        {
+            case SDL_QUIT:
+            {
+                this->game_window->close();
+                break;
+            }
+            case SDL_MOUSEBUTTONDOWN:
+            {
+                world->check_mouse_click({mouse_x, mouse_y});
+            }
+        }
+    }
 }
 
 #include <iostream>

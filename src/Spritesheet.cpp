@@ -15,8 +15,8 @@ Spritesheet::~Spritesheet()
 
 void Spritesheet::select_sprite(unsigned int _x, unsigned int _y)
 {
-    this->clip.x = _x * 64;
-    this->clip.y = _y * 64;
+    this->clip.x = _x * this->clip.w;
+    this->clip.y = _y * this->clip.h;
 }
 
 void Spritesheet::draw_selected(SDL_Surface* _window_surface, SDL_Rect* _position)

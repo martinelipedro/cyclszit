@@ -1,8 +1,8 @@
 #ifndef _CONSTANTS_HPP
 #define _CONSTANTS_HPP
 
-#define TILE_WIDTH 64
-#define TILE_HEIGHT 32
+#define TILE_WIDTH 128
+#define TILE_HEIGHT 64
 
 namespace constants
 {

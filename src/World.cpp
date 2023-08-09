@@ -1,7 +1,7 @@
 #include "include/World.hpp"
 #include "include/constants.hpp"
 
-World::World() : tile_spritesheet("test.bmp", 64, 64)
+World::World() : tile_spritesheet("test.bmp", 128, 128)
 {
     this->tile_spritesheet.select_sprite(0, 0);
 }
