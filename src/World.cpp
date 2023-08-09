@@ -1,7 +1,8 @@
 #include "include/World.hpp"
 #include "include/constants.hpp"
 
-#
+#define WORLD_OFFSET_X 550
+#define WORLD_OFFSET_Y 0
 
 World::World() : tile_spritesheet("test.bmp", SPRITE_SIZE, SPRITE_SIZE)
 {
@@ -10,7 +11,7 @@ World::World() : tile_spritesheet("test.bmp", SPRITE_SIZE, SPRITE_SIZE)
 
 SDL_Rect* World::get_sprite_position(int x, int y)
 {
-    SDL_Rect* position = new SDL_Rect{550 + ((x * TILE_WIDTH / 2) - (y * TILE_WIDTH / 2)), 0 + ((y * TILE_HEIGHT /2) + (x * TILE_HEIGHT / 2)), 0, 0};
+    SDL_Rect* position = new SDL_Rect{WORLD_OFFSET_X + ((x * TILE_WIDTH / 2) - (y * TILE_WIDTH / 2)), WORLD_OFFSET_Y + ((y * TILE_HEIGHT /2) + (x * TILE_HEIGHT / 2)), 0, 0};
     return position;
 }
 
@@ -50,8 +51,8 @@ void World::check_mouse_click(SDL_Point mouse_position)
     {   
         for (auto& tile : _)
         {
-            float sx = mouse_position.x - 550;
-            float sy = mouse_position.y;
+            float sx = mouse_position.x - WORLD_OFFSET_X;
+            float sy = mouse_position.y - WORLD_OFFSET_Y;
 
             float relative_x = ((sx / TILE_WIDTH) + (sy / TILE_HEIGHT)) - 1;
             float relative_y = ((sy / TILE_HEIGHT) - (sx / TILE_WIDTH));
@@ -73,7 +74,6 @@ void World::check_mouse_click(SDL_Point mouse_position)
     }  
 
 }
-
 
 void World::select_sprite(WorldTile& tile)
 {

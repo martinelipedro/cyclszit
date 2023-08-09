@@ -53,11 +53,6 @@ void Application::update()
     }
 }
 
-#include <iostream>
-
-// xs = offsetx + ((x * tile_width / 2) - (y * tile_width / 2))
-// ys = offsety + ((y * tile_height / 2) - (x * tile_height / 2))
-
 void Application::draw()
 {
     this->world->draw(this->game_window->get_window_surface());

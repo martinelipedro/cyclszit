@@ -2,7 +2,6 @@
 #define _APPLICATION_HPP
 
 #include "Window.hpp"
-#include "Spritesheet.hpp"
 #include "World.hpp"
 
 class Application
