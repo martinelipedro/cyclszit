@@ -1,8 +1,8 @@
 #include "include/World.hpp"
-#include "include/constants.hpp"
+#include "include/GameObject.hpp"
 
 #define WORLD_OFFSET_X 550
-#define WORLD_OFFSET_Y 0
+#define WORLD_OFFSET_Y 75
 
 World::World() : tile_spritesheet(constants::path_terrain_tileset, SPRITE_SIZE, SPRITE_SIZE)
 {
@@ -27,10 +27,15 @@ void World::populate_matrix()
                 i,
                 j,
                 this->get_sprite_position(i, j),
+                false,
+                std::nullopt
             };
             this->world_matrix[i][j] = tile;
         }
     }
+
+
+    this->world_matrix[3][3].child = new GOTree(GameObjectType::Tree, &this->world_matrix[3][3]);
 }
 
 void World::reset_selected()
@@ -60,6 +65,7 @@ void World::check_mouse_click(SDL_Point mouse_position)
             int cursor_y = round(relative_y); 
 
             world_matrix[cursor_x][cursor_y].selected = true;
+            world_matrix[cursor_x][cursor_y].child = std::nullopt;
             if (cursor_y >= 0 && cursor_y < MATRIX_SIZE)
                 world_matrix[cursor_x][cursor_y].type = TileType::SELECTED_GRASS_DIRT;
             if (cursor_y < MATRIX_SIZE - 1)
@@ -103,6 +109,12 @@ void World::draw(SDL_Surface* window_surface)
         {
             this->select_sprite(tile);
             this->tile_spritesheet.draw_selected(window_surface, tile.absolute_position);
+            if (tile.child.has_value())
+            {
+                tile.child.value()->draw(window_surface, &this->tile_spritesheet);
+            }
         }
-    }   
+    }  
+
+    
 }

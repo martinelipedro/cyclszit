@@ -1,7 +1,14 @@
 #ifndef _WORLD_HPP
 #define _WORLD_HPP
 
+#include <optional>
 #include "Spritesheet.hpp"
+#include "constants.hpp"
+
+class GameObject;
+enum class GameObjectType;
+class GOTree;
+
 
 #define SPRITE_SIZE 128
 #define MATRIX_SIZE 8 
@@ -22,6 +29,7 @@ struct WorldTile
     int rel_y;
     SDL_Rect* absolute_position;
     bool selected = false;
+    std::optional<GameObject*> child;
 };
 
 class World
