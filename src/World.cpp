@@ -4,7 +4,7 @@
 #define WORLD_OFFSET_X 550
 #define WORLD_OFFSET_Y 0
 
-World::World() : tile_spritesheet("test.bmp", SPRITE_SIZE, SPRITE_SIZE)
+World::World() : tile_spritesheet(constants::path_terrain_tileset, SPRITE_SIZE, SPRITE_SIZE)
 {
     this->tile_spritesheet.select_sprite(0, 0);
 }
