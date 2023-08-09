@@ -35,11 +35,11 @@ void World::populate_matrix()
     }
 
 
-    this->world_matrix[3][3].child = new GOTree(GameObjectType::Tree, &this->world_matrix[3][3]);
+    this->world_matrix[1][1].child = new GOTree(GameObjectType::Tree, &this->world_matrix[1][1]);
 }
 
 void World::reset_selected()
-{
+{s
     for (auto& _ : world_matrix)
     {
         for (auto& tile : _)
