@@ -1,23 +1,25 @@
 #include "include/World.hpp"
 #include "include/constants.hpp"
 
-World::World() : tile_spritesheet("test.bmp", 128, 128)
+#
+
+World::World() : tile_spritesheet("test.bmp", SPRITE_SIZE, SPRITE_SIZE)
 {
     this->tile_spritesheet.select_sprite(0, 0);
 }
 
 SDL_Rect* World::get_sprite_position(int x, int y)
 {
-    SDL_Rect* position = new SDL_Rect{500 + ((x * TILE_WIDTH / 2) - (y * TILE_WIDTH / 2)), 0 + ((y * TILE_HEIGHT /2) + (x * TILE_HEIGHT / 2)), 0, 0};
+    SDL_Rect* position = new SDL_Rect{550 + ((x * TILE_WIDTH / 2) - (y * TILE_WIDTH / 2)), 0 + ((y * TILE_HEIGHT /2) + (x * TILE_HEIGHT / 2)), 0, 0};
     return position;
 }
 
 // TODO: generate world chunks randomly
 void World::populate_matrix()
 {
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < MATRIX_SIZE; ++i)
     {
-        for (int j = 0; j < 10; ++j)
+        for (int j = 0; j < MATRIX_SIZE; ++j)
         {
             WorldTile tile = {
                 TileType::GRASS_DIRT,
@@ -48,7 +50,7 @@ void World::check_mouse_click(SDL_Point mouse_position)
     {   
         for (auto& tile : _)
         {
-            float sx = mouse_position.x - 500;
+            float sx = mouse_position.x - 550;
             float sy = mouse_position.y;
 
             float relative_x = ((sx / TILE_WIDTH) + (sy / TILE_HEIGHT)) - 1;
@@ -57,13 +59,13 @@ void World::check_mouse_click(SDL_Point mouse_position)
             int cursor_y = round(relative_y); 
 
             world_matrix[cursor_x][cursor_y].selected = true;
-            if (cursor_y >= 0 && cursor_y < 10)
+            if (cursor_y >= 0 && cursor_y < MATRIX_SIZE)
                 world_matrix[cursor_x][cursor_y].type = TileType::SELECTED_GRASS_DIRT;
-            if (cursor_y < 9)
+            if (cursor_y < MATRIX_SIZE - 1)
             {
                 world_matrix[cursor_x][cursor_y + 1].type = TileType::SELECTED_RIGHT_GRASS_DIRT;
             }
-            if (cursor_x < 9)
+            if (cursor_x < MATRIX_SIZE - 1)
             {
                 world_matrix[cursor_x + 1][cursor_y].type = TileType::SELECTED_LEFT_GRASS_DIRT;
             }   

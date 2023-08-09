@@ -1,9 +1,6 @@
 #ifndef _SPRITESHEET_HPP
 #define _SPRITESHEET_HPP
 
-#define ORIGINAL_SPRITE_SIZE 16
-#define SPRITE_SCALE 2
-#define SPRITE_SIZE ORIGINAL_SPRITE_SIZE * SPRITE_SCALE
 #include <SDL2/SDL.h>
 
 class Spritesheet

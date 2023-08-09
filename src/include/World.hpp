@@ -3,6 +3,9 @@
 
 #include "Spritesheet.hpp"
 
+#define SPRITE_SIZE 128
+#define MATRIX_SIZE 8 
+
 // Name: [selected]?, [selected_side]?, [shape]?, [top], [down]
 enum class TileType
 {
@@ -24,7 +27,7 @@ struct WorldTile
 class World
 {
 private:
-    WorldTile world_matrix[10][10];
+    WorldTile world_matrix[MATRIX_SIZE][MATRIX_SIZE];
     Spritesheet tile_spritesheet;
 
     SDL_Rect* get_sprite_position(int x, int y);
