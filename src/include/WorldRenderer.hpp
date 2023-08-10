@@ -8,31 +8,9 @@
 #include <optional>
 #include <array>
 
-class GameObject;
-enum class GameObjectType;
-class GOTree;
 
 
-enum class TileType
-{
-    GRASS_DIRT,
-    SELECTED_GRASS_DIRT,
-    SELECTED_LEFT_GRASS_DIRT,
-    SELECTED_RIGHT_GRASS_DIRT,
-};
-
-struct WorldTile
-{
-    TileType type;
-    int rel_x;
-    int rel_y;
-    SDL_Rect* absolute_position;
-    std::optional<GameObject*> child;
-};
-
-
-
-
+#include "World.hpp"
 
 SDL_Rect* get_sprite_absolute_position(int x, int y);
 

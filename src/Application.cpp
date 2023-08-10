@@ -13,7 +13,7 @@ void Application::initialize()
 {
     SDL_Init(SDL_INITIALIZATION_FLAGS);
     this->initialize_window();
-    this->world = new World(this->game_window->get_window_surface());
+    this->world = new WorldController(this->game_window->get_window_surface());
     this->world->populate_matrix();
     this->player = new Player;
     this->player->wood_qt = 0;

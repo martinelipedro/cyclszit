@@ -2,37 +2,35 @@
 #define _WORLD_HPP
 
 #include <optional>
-
 #include "constants.hpp"
-#include "WorldRenderer.hpp"
 #include "Player.hpp"
+#include "defs.hpp"
+#include <SDL2/SDL.h>
 #include <array>
+
 
 class GameObject;
 enum class GameObjectType;
 class GOTree;
 
-#include "defs.hpp"
-
 // Name: [selected]?, [selected_side]?, [shape]?, [top], [down]
-
-
-
-
-class World
+enum class TileType
 {
-private:
-    std::array<std::array<WorldTile*, MATRIX_SIZE>, MATRIX_SIZE> area_matrix;
-
-public:
-    WorldRenderer* renderer;
-
-    World(SDL_Surface* get_window_surface);
-    // TODO: generate world chunks randomly
-    void populate_matrix();
-    void reset_selected();
-    void check_mouse_click(SDL_Point mouse_position, Player* player);
-    void draw();
+    GRASS_DIRT,
+    SELECTED_GRASS_DIRT,
+    SELECTED_LEFT_GRASS_DIRT,
+    SELECTED_RIGHT_GRASS_DIRT,
 };
+
+struct WorldTile
+{
+    TileType type;
+    int rel_x;
+    int rel_y;
+    SDL_Rect* absolute_position;
+    std::optional<GameObject*> child;
+};
+
+
 
 #endif

@@ -2,7 +2,7 @@
 #define _APPLICATION_HPP
 
 #include "Window.hpp"
-#include "World.hpp"
+#include "WorldController.hpp"
 #include "Player.hpp"
 
 class Application
@@ -10,7 +10,7 @@ class Application
 private:
     Window* game_window;
     SDL_Event event;
-    World* world;
+    WorldController* world;
     Player* player;
     
 
