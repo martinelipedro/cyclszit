@@ -39,7 +39,7 @@ void World::populate_matrix()
 }
 
 void World::reset_selected()
-{s
+{
     for (auto& _ : world_matrix)
     {
         for (auto& tile : _)
