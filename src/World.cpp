@@ -1,8 +1,6 @@
 #include "include/World.hpp"
 #include "include/GameObject.hpp"
 
-#define WORLD_OFFSET_X 550
-#define WORLD_OFFSET_Y 75
 
 World::World() : tile_spritesheet(constants::path_terrain_tileset, SPRITE_SIZE, SPRITE_SIZE)
 {
@@ -49,8 +47,6 @@ void World::reset_selected()
     }
 }
 
-#include <iostream>
-
 void World::check_mouse_click(SDL_Point mouse_position)
 {
     this->reset_selected();
@@ -67,7 +63,7 @@ void World::check_mouse_click(SDL_Point mouse_position)
             int cursor_y = round(relative_y); 
 
             
-            if (cursor_y >= 0 && cursor_y < MATRIX_SIZE && cursor_x > 0 && cursor_x < MATRIX_SIZE)
+            if (cursor_y >= 0 && cursor_y < MATRIX_SIZE && cursor_x >= 0 && cursor_x < MATRIX_SIZE)
             {
                 area_matrix[cursor_x][cursor_y]->type = TileType::SELECTED_GRASS_DIRT;
 

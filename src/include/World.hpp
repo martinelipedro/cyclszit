@@ -5,15 +5,13 @@
 #include "Spritesheet.hpp"
 #include "constants.hpp"
 
-#include <list>
 #include <array>
 
 class GameObject;
 enum class GameObjectType;
 class GOTree;
 
-#define SPRITE_SIZE 128
-#define MATRIX_SIZE 8 
+#include "defs.hpp"
 
 // Name: [selected]?, [selected_side]?, [shape]?, [top], [down]
 enum class TileType
