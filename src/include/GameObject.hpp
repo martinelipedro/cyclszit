@@ -6,7 +6,7 @@
 
 #include "Spritesheet.hpp"
 #include "constants.hpp"
-#include "World.hpp"
+#include "WorldRenderer.hpp"
 
 #include "PlayerProtocols.hpp"
 #include "Player.hpp"

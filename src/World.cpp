@@ -2,16 +2,12 @@
 #include "include/GameObject.hpp"
 
 
-World::World() : tile_spritesheet(constants::path_terrain_tileset, SPRITE_SIZE, SPRITE_SIZE)
-{
-    this->tile_spritesheet.select_sprite(0, 0);
-    
-}
 
-SDL_Rect* World::get_sprite_position(int x, int y)
+#include <iostream>
+
+World::World(SDL_Surface* window_surface)
 {
-    SDL_Rect* position = new SDL_Rect{WORLD_OFFSET_X + ((x * TILE_WIDTH / 2) - (y * TILE_WIDTH / 2)), WORLD_OFFSET_Y + ((y * TILE_HEIGHT /2) + (x * TILE_HEIGHT / 2)), 0, 0};
-    return position;
+    this->renderer = new WorldRenderer(window_surface);
 }
 
 // TODO: generate world chunks randomly
@@ -25,7 +21,7 @@ void World::populate_matrix()
                 TileType::GRASS_DIRT,
                 i,
                 j,
-                this->get_sprite_position(i, j),
+                get_sprite_absolute_position(i, j),
                 std::nullopt
             };
             this->area_matrix[i][j] = tile;
@@ -46,8 +42,6 @@ void World::reset_selected()
         }
     }
 }
-
-#include <iostream>
 
 void World::check_mouse_click(SDL_Point mouse_position, Player* player)
 {
@@ -87,38 +81,7 @@ void World::check_mouse_click(SDL_Point mouse_position, Player* player)
     }  
 }
 
-void World::select_sprite(TileType type)
+void World::draw()
 {
-    if (type == TileType::SELECTED_GRASS_DIRT)
-    {
-        this->tile_spritesheet.select_sprite(1, 0);
-    }
-    else if (type == TileType::SELECTED_LEFT_GRASS_DIRT)
-    {
-        this->tile_spritesheet.select_sprite(2, 0);
-    }
-    else if (type == TileType::SELECTED_RIGHT_GRASS_DIRT)
-    {
-        this->tile_spritesheet.select_sprite(3, 0);
-    }
-    else
-    {
-        this->tile_spritesheet.select_sprite(0, 0);
-    }
-}
-
-void World::draw(SDL_Surface* window_surface)
-{
-    for (auto& _ : area_matrix)
-    {   
-        for (auto& tile : _)
-        {
-            this->select_sprite(tile->type);
-            this->tile_spritesheet.draw_selected(window_surface, tile->absolute_position);
-            if (tile->child.has_value())
-            {
-                tile->child.value()->draw(window_surface, &this->tile_spritesheet);
-            }
-        }
-    } 
+    this->renderer->draw(area_matrix);
 }
