@@ -5,10 +5,12 @@
 #include "Spritesheet.hpp"
 #include "constants.hpp"
 
+#include <list>
+#include <array>
+
 class GameObject;
 enum class GameObjectType;
 class GOTree;
-
 
 #define SPRITE_SIZE 128
 #define MATRIX_SIZE 8 
@@ -28,18 +30,17 @@ struct WorldTile
     int rel_x;
     int rel_y;
     SDL_Rect* absolute_position;
-    bool selected = false;
     std::optional<GameObject*> child;
 };
 
 class World
 {
 private:
-    WorldTile world_matrix[MATRIX_SIZE][MATRIX_SIZE];
+    std::array<std::array<WorldTile*, MATRIX_SIZE>, MATRIX_SIZE> area_matrix;
     Spritesheet tile_spritesheet;
 
     SDL_Rect* get_sprite_position(int x, int y);
-    void select_sprite(WorldTile& tile);
+    void select_sprite(TileType tile);
 public:
     World();
     // TODO: generate world chunks randomly
