@@ -47,7 +47,9 @@ void World::reset_selected()
     }
 }
 
-void World::check_mouse_click(SDL_Point mouse_position)
+#include <iostream>
+
+void World::check_mouse_click(SDL_Point mouse_position, Player* player)
 {
     this->reset_selected();
     for (auto& _ : area_matrix)
@@ -62,9 +64,14 @@ void World::check_mouse_click(SDL_Point mouse_position)
             int cursor_x = round(relative_x);
             int cursor_y = round(relative_y); 
 
-            
+
+
             if (cursor_y >= 0 && cursor_y < MATRIX_SIZE && cursor_x >= 0 && cursor_x < MATRIX_SIZE)
             {
+                if (area_matrix[cursor_x][cursor_y]->child.has_value())
+                {
+                    static_cast<GOTree*>(area_matrix[cursor_x][cursor_y]->child.value())->handle(receive_item_callback, player);
+                }
                 area_matrix[cursor_x][cursor_y]->type = TileType::SELECTED_GRASS_DIRT;
 
                 if (cursor_y < MATRIX_SIZE - 1)

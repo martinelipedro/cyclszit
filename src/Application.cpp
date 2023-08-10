@@ -15,6 +15,8 @@ void Application::initialize()
     this->initialize_window();
     this->world = new World;
     this->world->populate_matrix();
+    this->player = new Player;
+    this->player->wood_qt = 0;
 }
 
 void Application::initialize_window()
@@ -47,7 +49,7 @@ void Application::update()
             }
             case SDL_MOUSEBUTTONDOWN:
             {
-                world->check_mouse_click({mouse_x, mouse_y});
+                world->check_mouse_click({mouse_x, mouse_y}, this->player);
             }
         }
     }

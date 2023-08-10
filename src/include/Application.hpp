@@ -3,6 +3,7 @@
 
 #include "Window.hpp"
 #include "World.hpp"
+#include "Player.hpp"
 
 class Application
 {
@@ -10,6 +11,7 @@ private:
     Window* game_window;
     SDL_Event event;
     World* world;
+    Player* player;
     
 
     void initialize();

@@ -5,6 +5,7 @@
 #include "Spritesheet.hpp"
 #include "constants.hpp"
 
+#include "Player.hpp"
 #include <array>
 
 class GameObject;
@@ -44,7 +45,7 @@ public:
     // TODO: generate world chunks randomly
     void populate_matrix();
     void reset_selected();
-    void check_mouse_click(SDL_Point mouse_position);
+    void check_mouse_click(SDL_Point mouse_position, Player* player);
     void draw(SDL_Surface* window_surface);
 };
 
