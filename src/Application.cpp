@@ -33,12 +33,14 @@ void Application::main_loop()
     }
 }
 
+#include <iostream>
+
 void Application::update()
 {
     int mouse_x;
     int mouse_y;
     SDL_GetMouseState(&mouse_x, &mouse_y);
-    while (SDL_PollEvent(&this->event) > 0)
+    while (SDL_PollEvent(&this->event))
     {
         switch (event.type)
         {
@@ -47,10 +49,13 @@ void Application::update()
                 this->game_window->close();
                 break;
             }
+
             case SDL_MOUSEBUTTONDOWN:
             {
                 world->check_mouse_click({mouse_x, mouse_y}, this->player);
+                break;
             }
+            
         }
     }
 }

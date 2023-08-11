@@ -12,7 +12,7 @@ private:
     SDL_Event event;
     WorldController* world;
     Player* player;
-    
+
 
     void initialize();
     void initialize_window();

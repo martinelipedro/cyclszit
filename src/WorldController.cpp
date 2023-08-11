@@ -25,7 +25,6 @@ void WorldController::populate_matrix()
         }
     }
 
-
     this->area_matrix[1][1]->child = new GOTree(GameObjectType::Tree, this->area_matrix[1][1]);
 }
 
@@ -42,6 +41,7 @@ void WorldController::reset_selected()
 
 void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player)
 {
+    bool event_handled = false;
     this->reset_selected();
     for (auto& _ : area_matrix)
     {   
@@ -54,14 +54,13 @@ void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player
             float relative_y = ((sy / TILE_HEIGHT) - (sx / TILE_WIDTH));
             int cursor_x = round(relative_x);
             int cursor_y = round(relative_y); 
-
-
-
+            
             if (cursor_y >= 0 && cursor_y < MATRIX_SIZE && cursor_x >= 0 && cursor_x < MATRIX_SIZE)
             {
-                if (area_matrix[cursor_x][cursor_y]->child.has_value())
+                if (area_matrix[cursor_x][cursor_y]->child.has_value() && !event_handled)
                 {
                     static_cast<GOTree*>(area_matrix[cursor_x][cursor_y]->child.value())->handle(receive_item_callback, player);
+                    event_handled = true;
                 }
                 area_matrix[cursor_x][cursor_y]->type = TileType::SELECTED_GRASS_DIRT;
 

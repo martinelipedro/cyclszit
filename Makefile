@@ -1,7 +1,7 @@
 SOURCES = ${shell find . -type f -name '*.cpp'}
 HEADERS = ${shell find . -type f -name '*.hpp'}
 OBJECTS = ${SOURCES:.cpp=.o}
-EXE_NAME = isosurvive
+EXE_NAME = cyclszit
 
 CLEAN_TARGETS = ${OBJECTS} ${shell find . -type f -name '*.o'} 
 
@@ -11,7 +11,7 @@ LIBS = -lSDL2
 
 all: ${OBJECTS} ${HEADERS}
 	g++ ${OBJECTS} -o ${EXE_NAME} ${LIBS}
-	rm -rf ${CLEAN_TARGETS}
+	# rm -rf ${CLEAN_TARGETS}
 
 clean:
 	rm -rf ${CLEAN_TARGETS} ${EXE_NAME}
