@@ -21,7 +21,6 @@ void Application::initialize()
     this->world = new WorldController(this->game_window->get_window_surface());
     this->world->populate_matrix();
     this->player = new Player(100, 100, 100);
-    this->player->wood_qt = 0;
 }
 
 void Application::initialize_window()
@@ -83,7 +82,7 @@ void Application::draw()
     this->draw_bar(30, 30, 40, 150, {255, 255, 255, 255}, {255, 0, 0, 0}, player->current_life / 100);
     this->draw_bar(80, 30, 40, 150, {255, 255, 255, 255}, {92, 83, 5, 255}, player->current_hunger / 100);
     this->draw_bar(130, 30, 40, 150, {255, 255, 255, 255}, {19, 183, 189, 255}, player->current_thirst / 100);
-    this->player->draw(this->game_window->get_window_surface());
+    // this->player->draw(this->game_window->get_window_surface());
 
     SDL_UpdateWindowSurface(this->game_window->get_object());
 }

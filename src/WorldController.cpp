@@ -65,8 +65,8 @@ void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player
                     event_handled = true;
                 }
                 area_matrix[cursor_x][cursor_y]->type = TileType::SELECTED_GRASS_DIRT;
-                player->player_x = cursor_x;
-                player->player_y = cursor_y;
+                // player->player_x = cursor_x;
+                // player->player_y = cursor_y;
 
                 if (cursor_y < MATRIX_SIZE - 1)
                 {

@@ -4,6 +4,9 @@
 
 void receive_item_callback(ReceiveItemsProtocol* protocol, Player* player)
 {
-    player->wood_qt += protocol->item_stack_list[0]->quantity;
-    std::cout << player->wood_qt << '\n';
+    for (auto item : protocol->item_stack_list)
+    {
+        player->inventory->data[item->type]->quantity += item->quantity;
+        std::cout << player->inventory->data[item->type]->quantity << '\n'; 
+    }
 }
