@@ -72,7 +72,7 @@ void Application::draw_bar(int x, int y, int w, int h, SDL_Color bg, SDL_Color f
     SDL_FillRect(this->game_window->get_window_surface(), background_rect, color_from_rgb(bg.r, bg.g, bg.b, bg.a));
     SDL_Rect* border_rect = new SDL_Rect {x + 2, y+ 2, w - 4, h-4};
     SDL_FillRect(this->game_window->get_window_surface(), border_rect, 0);
-    SDL_Rect* inner_rect = new SDL_Rect {x + 3, (y + (h - h * percent)) + 3, w - 6.f, h * percent- 6.f};
+    SDL_Rect* inner_rect = new SDL_Rect {x + 3, static_cast<int>((y + (h - h * percent)) + 3), static_cast<int>(w - 6.f), static_cast<int>(h * percent- 6.f)};
     SDL_FillRect(this->game_window->get_window_surface(), inner_rect, color_from_rgb(fg.r, fg.g, fg.b, fg.a));
 }
 
@@ -80,11 +80,10 @@ void Application::draw()
 {
     SDL_FillRect(this->game_window->get_window_surface(), NULL, color_from_rgb(83, 93, 94, 255));
     this->world->draw();
-    this->draw_bar(30, 30, 40, 150, {255, 255, 255, 255}, {255, 0, 0, 0}, 0.8);
-    this->draw_bar(80, 30, 40, 150, {255, 255, 255, 255}, {92, 83, 5, 255}, 0.7);
-    this->draw_bar(130, 30, 40, 150, {255, 255, 255, 255}, {19, 183, 189, 255}, 0.35);
-
-
+    this->draw_bar(30, 30, 40, 150, {255, 255, 255, 255}, {255, 0, 0, 0}, player->current_life / 100);
+    this->draw_bar(80, 30, 40, 150, {255, 255, 255, 255}, {92, 83, 5, 255}, player->current_hunger / 100);
+    this->draw_bar(130, 30, 40, 150, {255, 255, 255, 255}, {19, 183, 189, 255}, player->current_thirst / 100);
+    this->player->draw(this->game_window->get_window_surface());
 
     SDL_UpdateWindowSurface(this->game_window->get_object());
 }

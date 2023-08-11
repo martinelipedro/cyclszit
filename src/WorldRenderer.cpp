@@ -1,13 +1,6 @@
 #include "include/WorldRenderer.hpp"
 #include "include/GameObject.hpp"
 
-
-SDL_Rect* get_sprite_absolute_position(int x, int y)
-{
-    SDL_Rect* position = new SDL_Rect{WORLD_OFFSET_X + ((x * TILE_WIDTH / 2) - (y * TILE_WIDTH / 2)), WORLD_OFFSET_Y + ((y * TILE_HEIGHT /2) + (x * TILE_HEIGHT / 2)), 0, 0};
-    return position;
-}
-
 WorldRenderer::WorldRenderer(SDL_Surface* window_surface) 
     : window_surface(window_surface), spritesheet(new Spritesheet(constants::path_terrain_tileset, 128, 128)) {}
 

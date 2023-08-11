@@ -6,4 +6,8 @@
 #define SPRITE_SIZE 128
 #define MATRIX_SIZE 8 
 
+#include "constants.hpp"
+
+
+
 #endif

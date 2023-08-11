@@ -12,7 +12,6 @@
 
 #include "World.hpp"
 
-SDL_Rect* get_sprite_absolute_position(int x, int y);
 
 class WorldRenderer
 {

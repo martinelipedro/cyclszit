@@ -7,11 +7,15 @@ CLEAN_TARGETS = ${OBJECTS} ${shell find . -type f -name '*.o'}
 
 LIBS = -lSDL2
 
-.PHONY: all clean
+.PHONY: all clean exe
+
+
 
 all: ${OBJECTS} ${HEADERS}
 	g++ ${OBJECTS} -o ${EXE_NAME} ${LIBS}
-	# rm -rf ${CLEAN_TARGETS}
+
+exe: all
+	rm -rf ${CLEAN_TARGETS}
 
 clean:
 	rm -rf ${CLEAN_TARGETS} ${EXE_NAME}

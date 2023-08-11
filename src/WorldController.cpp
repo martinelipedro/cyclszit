@@ -2,6 +2,8 @@
 #include "include/GameObject.hpp"
 #include <iostream>
 
+#include "include/helpers.hpp"
+
 WorldController::WorldController(SDL_Surface* window_surface)
 {
     this->renderer = new WorldRenderer(window_surface);
@@ -63,6 +65,8 @@ void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player
                     event_handled = true;
                 }
                 area_matrix[cursor_x][cursor_y]->type = TileType::SELECTED_GRASS_DIRT;
+                player->player_x = cursor_x;
+                player->player_y = cursor_y;
 
                 if (cursor_y < MATRIX_SIZE - 1)
                 {
