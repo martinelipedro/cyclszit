@@ -13,6 +13,8 @@ private:
     WorldController* world;
     Player* player;
 
+    void draw_bar(int x, int y, int w, int h, SDL_Color bg, SDL_Color fg, float percent);
+
 
     void initialize();
     void initialize_window();
