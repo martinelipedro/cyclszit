@@ -4,8 +4,6 @@
 
 #define SDL_INITIALIZATION_FLAGS SDL_INIT_VIDEO
 
-
-
 void Application::run()
 {
     this->initialize();
@@ -22,6 +20,9 @@ void Application::initialize()
     this->status_bar = new UIFStatusBar(30, 30, 40, 150, {255, 255, 255, 255}, {255, 0, 0, 0});
     this->ui_manager = new UIManager;
     this->ui_manager->add_frame(status_bar);
+
+    this->ui_manager->add_frame(new UIFInventory(constants::window_width * 0.1, constants::window_height * 0.15, constants::window_width * 0.8, constants::window_height * 0.7));
+
 }
 
 void Application::initialize_window()
@@ -37,8 +38,6 @@ void Application::main_loop()
         this->draw();
     }
 }
-
-#include <iostream>
 
 void Application::update()
 {
@@ -69,22 +68,14 @@ void Application::update()
                 {
                     this->world->mark_tile_for_construction();
                 }
+                else if (event.key.keysym.sym == SDLK_q)
+                {
+                    static_cast<UIFInventory*>(this->ui_manager->ui_frames[1])->is_visible = !static_cast<UIFInventory*>(this->ui_manager->ui_frames[1])->is_visible;
+                }
                 break;
-            }
-            
+            }          
         }
     }
-}
-
-void Application::draw_bar(int x, int y, int w, int h, SDL_Color bg, SDL_Color fg, float percent)
-{
-    SDL_Rect* background_rect = new SDL_Rect {x, y, w, h};
-    
-    // SDL_FillRect(this->game_window->get_window_surface(), background_rect, color_from_rgb(bg.r, bg.g, bg.b, bg.a));
-    // SDL_Rect* border_rect = new SDL_Rect {x + 2, y+ 2, w - 4, h-4};
-    // SDL_FillRect(this->game_window->get_window_surface(), border_rect, 0);
-    // SDL_Rect* inner_rect = new SDL_Rect {x + 3, static_cast<int>((y + (h - h * percent)) + 3), static_cast<int>(w - 6.f), static_cast<int>(h * percent- 6.f)};
-    // SDL_FillRect(this->game_window->get_window_surface(), inner_rect, color_from_rgb(fg.r, fg.g, fg.b, fg.a));
 }
 
 void Application::draw()
@@ -92,6 +83,7 @@ void Application::draw()
     SDL_FillRect(this->game_window->get_window_surface(), NULL, color_from_rgb(83, 93, 94, 255));
     this->world->draw();
     this->ui_manager->draw(this->game_window->get_window_surface());
+    SDL_Rect* t_rect = new SDL_Rect{300, 300, 0, 0};
 
     SDL_UpdateWindowSurface(this->game_window->get_object());
 }

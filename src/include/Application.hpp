@@ -6,6 +6,8 @@
 #include "Player.hpp"
 #include "UI.hpp"
 
+#include <SDL2/SDL_ttf.h>
+
 class Application
 {
 private:
@@ -15,9 +17,6 @@ private:
     Player* player;
     UIFStatusBar* status_bar;
     UIManager* ui_manager;
-
-    void draw_bar(int x, int y, int w, int h, SDL_Color bg, SDL_Color fg, float percent);
-
 
     void initialize();
     void initialize_window();

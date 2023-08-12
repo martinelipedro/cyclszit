@@ -57,6 +57,9 @@ void WorldController::mark_tile_for_construction()
     if (!this->selected_tile.has_value())
         return;
     
+    if (this->selected_tile.value()->child.has_value())
+        return;
+    
     SDL_Point* relative_position = this->selected_tile.value()->relative_position;
     this->area_matrix[relative_position->x][relative_position->y]->type = TileType::CONSTRUCTION_GRASS_DIRT;
     if (relative_position->y < MATRIX_SIZE - 1)

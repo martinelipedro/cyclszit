@@ -30,7 +30,7 @@ Window::Window(uint16_t _width, uint16_t _height, const std::string& _title)
         SDL_WINDOWPOS_CENTERED,
         _width,
         _height,
-        0
+        SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN
     );
     h_check_window_ok(this->window_object);
 
@@ -48,10 +48,9 @@ Window::Window(uint16_t _width, uint16_t _height, const char* _title)
         SDL_WINDOWPOS_CENTERED,
         _width,
         _height,
-        0
+        SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN
     );
     h_check_window_ok(this->window_object);
-
     this->window_surface_object = SDL_GetWindowSurface(this->window_object);
     h_check_window_surface_ok(this->window_surface_object);
 
