@@ -20,6 +20,9 @@ enum class TileType
     SELECTED_GRASS_DIRT,
     SELECTED_LEFT_GRASS_DIRT,
     SELECTED_RIGHT_GRASS_DIRT,
+    CONSTRUCTION_GRASS_DIRT,
+    CONSTRUCTION_LEFT_GRASS_DIRT,
+    CONSTRUCTION_RIGHT_GRASS_DIRT,
 };
 
 struct WorldTile
@@ -27,7 +30,7 @@ struct WorldTile
     TileType type;
     int rel_x;
     int rel_y;
-    SDL_Rect* absolute_position;
+    SDL_Point* absolute_position;
     std::optional<GameObject*> child;
 };
 

@@ -3,12 +3,14 @@
 
 void PlayerRenderer::draw(SDL_Surface* surface, int x, int y)
 {
-    SDL_Rect* rect = get_sprite_absolute_position(x, y);
-    rect->x += 50;
-    rect->y -= 30;
-    rect->w = 30;
-    rect->h = 70;
+    SDL_Point* position = get_absolute_position(x, y);
+    SDL_Rect* draw_rect = new SDL_Rect{position->x, position->y, 0, 0};
+    draw_rect->x += 50;
+    draw_rect->y -= 30;
+    draw_rect->w = 30;
+    draw_rect->h = 70;
 
-    SDL_FillRect(surface, rect, 0);
-
+    SDL_FillRect(surface, draw_rect, 0);
+    delete position;
+    delete draw_rect;
 }

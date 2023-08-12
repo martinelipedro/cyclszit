@@ -17,6 +17,7 @@ public:
     // TODO: generate world chunks randomly
     void populate_matrix();
     void reset_selected();
+    void mark_tile_for_construction();
     void check_mouse_click(SDL_Point mouse_position, Player* player);
     void draw();
 };

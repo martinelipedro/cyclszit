@@ -62,6 +62,14 @@ void Application::update()
                 }
                 break;                
             }
+            case SDL_KEYDOWN:
+            {
+                if (event.key.keysym.sym == SDLK_e)
+                {
+                    this->world->mark_tile_for_construction();
+                }
+                break;
+            }
             
         }
     }

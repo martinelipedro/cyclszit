@@ -21,7 +21,7 @@ void WorldController::populate_matrix()
                 TileType::GRASS_DIRT,
                 i,
                 j,
-                get_sprite_absolute_position(i, j),
+                get_absolute_position(i, j),
                 std::nullopt
             };
             this->area_matrix[i][j] = tile;
@@ -38,6 +38,9 @@ void WorldController::reset_selected()
         int rel_x = this->selected_tile.value()->rel_x;
         int rel_y = this->selected_tile.value()->rel_y;
 
+        if (this->area_matrix[rel_x][rel_y]->type != TileType::SELECTED_GRASS_DIRT)
+            return;
+
         this->area_matrix[rel_x][rel_y]->type = TileType::GRASS_DIRT;
         if (rel_y < MATRIX_SIZE - 1)
         {
@@ -50,6 +53,25 @@ void WorldController::reset_selected()
     }
 }
 
+void WorldController::mark_tile_for_construction()
+{
+    if (!this->selected_tile.has_value())
+        return;
+    
+    int rel_x = this->selected_tile.value()->rel_x;
+    int rel_y = this->selected_tile.value()->rel_y;
+
+    this->area_matrix[rel_x][rel_y]->type = TileType::CONSTRUCTION_GRASS_DIRT;
+    if (rel_y < MATRIX_SIZE - 1)
+    {
+        area_matrix[rel_x][rel_y + 1]->type = TileType::CONSTRUCTION_RIGHT_GRASS_DIRT;
+    }
+    if (rel_x < MATRIX_SIZE - 1)
+    {
+        area_matrix[rel_x + 1][rel_y]->type = TileType::CONSTRUCTION_LEFT_GRASS_DIRT;
+    }  
+}
+
 void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player)
 {
     bool event_handled = false;
@@ -58,33 +80,24 @@ void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player
     {   
         for (auto& tile : _)
         {
-            float sx = mouse_position.x - WORLD_OFFSET_X;
-            float sy = mouse_position.y - WORLD_OFFSET_Y;
-
-            float relative_x = ((sx / TILE_WIDTH) + (sy / TILE_HEIGHT)) - 1;
-            float relative_y = ((sy / TILE_HEIGHT) - (sx / TILE_WIDTH));
-            int cursor_x = round(relative_x);
-            int cursor_y = round(relative_y); 
+            SDL_Point* position = get_relative_position(mouse_position.x, mouse_position.y);
             
-            if (cursor_y >= 0 && cursor_y < MATRIX_SIZE && cursor_x >= 0 && cursor_x < MATRIX_SIZE)
+            if (position->y >= 0 && position->y < MATRIX_SIZE && position->x >= 0 && position->x < MATRIX_SIZE)
             {
-                this->selected_tile = area_matrix[cursor_x][cursor_y];
-                if (area_matrix[cursor_x][cursor_y]->child.has_value() && !event_handled)
+                this->selected_tile = area_matrix[position->x][position->y];
+                if (area_matrix[position->x][position->y]->child.has_value() && !event_handled)
                 {
-                    static_cast<GOTree*>(area_matrix[cursor_x][cursor_y]->child.value())->handle(receive_item_callback, player);
+                    static_cast<GOTree*>(area_matrix[position->x][position->y]->child.value())->handle(receive_item_callback, player);
                     event_handled = true;
                 }
-                area_matrix[cursor_x][cursor_y]->type = TileType::SELECTED_GRASS_DIRT;
-                // player->player_x = cursor_x;
-                // player->player_y = cursor_y;
-
-                if (cursor_y < MATRIX_SIZE - 1)
+                area_matrix[position->x][position->y]->type = TileType::SELECTED_GRASS_DIRT;
+                if (position->y < MATRIX_SIZE - 1)
                 {
-                    area_matrix[cursor_x][cursor_y + 1]->type = TileType::SELECTED_RIGHT_GRASS_DIRT;
+                    area_matrix[position->x][position->y + 1]->type = TileType::SELECTED_RIGHT_GRASS_DIRT;
                 }
-                if (cursor_x < MATRIX_SIZE - 1)
+                if (position->x < MATRIX_SIZE - 1)
                 {
-                    area_matrix[cursor_x + 1][cursor_y]->type = TileType::SELECTED_LEFT_GRASS_DIRT;
+                    area_matrix[position->x + 1][position->y]->type = TileType::SELECTED_LEFT_GRASS_DIRT;
                 }  
             }   
         }
