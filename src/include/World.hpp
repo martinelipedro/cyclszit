@@ -13,6 +13,9 @@ class GameObject;
 enum class GameObjectType;
 class GOTree;
 
+class ConstructionTile;
+class CraftingTile;
+
 // Name: [selected]?, [selected_side]?, [shape]?, [top], [down]
 enum class TileType
 {
@@ -28,10 +31,11 @@ enum class TileType
 struct WorldTile
 {
     TileType type;
-    int rel_x;
-    int rel_y;
+    SDL_Point* relative_position;
     SDL_Point* absolute_position;
     std::optional<GameObject*> child;
+    std::optional<ConstructionTile*> construction_tile;
+    std::optional<CraftingTile*> crafting_tile;
 };
 
 

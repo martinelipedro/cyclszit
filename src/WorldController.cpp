@@ -19,9 +19,10 @@ void WorldController::populate_matrix()
         {
             WorldTile* tile = new WorldTile {
                 TileType::GRASS_DIRT,
-                i,
-                j,
+                new SDL_Point{i, j},
                 get_absolute_position(i, j),
+                std::nullopt,
+                std::nullopt,
                 std::nullopt
             };
             this->area_matrix[i][j] = tile;
@@ -33,24 +34,22 @@ void WorldController::populate_matrix()
 
 void WorldController::reset_selected()
 {
-    if (this->selected_tile.has_value())
+    if (!this->selected_tile.has_value())
+        return;
+
+    SDL_Point* relative_position = this->selected_tile.value()->relative_position;
+    if (this->area_matrix[relative_position->x][relative_position->y]->type != TileType::SELECTED_GRASS_DIRT)
+        return;
+
+    this->area_matrix[relative_position->x][relative_position->y]->type = TileType::GRASS_DIRT;
+    if (relative_position->y < MATRIX_SIZE - 1)
     {
-        int rel_x = this->selected_tile.value()->rel_x;
-        int rel_y = this->selected_tile.value()->rel_y;
-
-        if (this->area_matrix[rel_x][rel_y]->type != TileType::SELECTED_GRASS_DIRT)
-            return;
-
-        this->area_matrix[rel_x][rel_y]->type = TileType::GRASS_DIRT;
-        if (rel_y < MATRIX_SIZE - 1)
-        {
-            area_matrix[rel_x][rel_y + 1]->type = TileType::GRASS_DIRT;
-        }
-        if (rel_x < MATRIX_SIZE - 1)
-        {
-            area_matrix[rel_x + 1][rel_y]->type = TileType::GRASS_DIRT;
-        }  
+        area_matrix[relative_position->x][relative_position->y + 1]->type = TileType::GRASS_DIRT;
     }
+    if (relative_position->x < MATRIX_SIZE - 1)
+    {
+        area_matrix[relative_position->x + 1][relative_position->y]->type = TileType::GRASS_DIRT;
+    }  
 }
 
 void WorldController::mark_tile_for_construction()
@@ -58,17 +57,15 @@ void WorldController::mark_tile_for_construction()
     if (!this->selected_tile.has_value())
         return;
     
-    int rel_x = this->selected_tile.value()->rel_x;
-    int rel_y = this->selected_tile.value()->rel_y;
-
-    this->area_matrix[rel_x][rel_y]->type = TileType::CONSTRUCTION_GRASS_DIRT;
-    if (rel_y < MATRIX_SIZE - 1)
+    SDL_Point* relative_position = this->selected_tile.value()->relative_position;
+    this->area_matrix[relative_position->x][relative_position->y]->type = TileType::CONSTRUCTION_GRASS_DIRT;
+    if (relative_position->y < MATRIX_SIZE - 1)
     {
-        area_matrix[rel_x][rel_y + 1]->type = TileType::CONSTRUCTION_RIGHT_GRASS_DIRT;
+        area_matrix[relative_position->x][relative_position->y + 1]->type = TileType::CONSTRUCTION_RIGHT_GRASS_DIRT;
     }
-    if (rel_x < MATRIX_SIZE - 1)
+    if (relative_position->x < MATRIX_SIZE - 1)
     {
-        area_matrix[rel_x + 1][rel_y]->type = TileType::CONSTRUCTION_LEFT_GRASS_DIRT;
+        area_matrix[relative_position->x + 1][relative_position->y]->type = TileType::CONSTRUCTION_LEFT_GRASS_DIRT;
     }  
 }
 

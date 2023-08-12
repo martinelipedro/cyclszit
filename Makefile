@@ -5,7 +5,7 @@ EXE_NAME = cyclszit
 
 CLEAN_TARGETS = ${OBJECTS} ${shell find . -type f -name '*.o'} 
 
-LIBS = -lSDL2
+LIBS = -lSDL2 -lSDL2_ttf
 
 .PHONY: all clean exe
 
