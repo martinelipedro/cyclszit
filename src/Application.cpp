@@ -56,8 +56,11 @@ void Application::update()
 
             case SDL_MOUSEBUTTONDOWN:
             {
-                world->check_mouse_click({mouse_x, mouse_y}, this->player);
-                break;
+                if (event.button.button == SDL_BUTTON_LEFT)
+                {
+                    world->check_mouse_click({mouse_x, mouse_y}, this->player);
+                }
+                break;                
             }
             
         }

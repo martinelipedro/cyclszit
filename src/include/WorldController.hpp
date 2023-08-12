@@ -9,6 +9,8 @@ class WorldController
 private:
     std::array<std::array<WorldTile*, MATRIX_SIZE>, MATRIX_SIZE> area_matrix;
 public:
+    std::optional<WorldTile*> selected_tile;
+
     WorldRenderer* renderer;
 
     WorldController(SDL_Surface* get_window_surface);

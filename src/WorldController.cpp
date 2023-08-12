@@ -7,6 +7,7 @@
 WorldController::WorldController(SDL_Surface* window_surface)
 {
     this->renderer = new WorldRenderer(window_surface);
+    this->selected_tile = std::nullopt;
 }
 
 // TODO: generate world chunks randomly
@@ -32,12 +33,20 @@ void WorldController::populate_matrix()
 
 void WorldController::reset_selected()
 {
-    for (auto& _ : area_matrix)
+    if (this->selected_tile.has_value())
     {
-        for (auto& tile : _)
+        int rel_x = this->selected_tile.value()->rel_x;
+        int rel_y = this->selected_tile.value()->rel_y;
+
+        this->area_matrix[rel_x][rel_y]->type = TileType::GRASS_DIRT;
+        if (rel_y < MATRIX_SIZE - 1)
         {
-            tile->type = TileType::GRASS_DIRT;
+            area_matrix[rel_x][rel_y + 1]->type = TileType::GRASS_DIRT;
         }
+        if (rel_x < MATRIX_SIZE - 1)
+        {
+            area_matrix[rel_x + 1][rel_y]->type = TileType::GRASS_DIRT;
+        }  
     }
 }
 
@@ -59,6 +68,7 @@ void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player
             
             if (cursor_y >= 0 && cursor_y < MATRIX_SIZE && cursor_x >= 0 && cursor_x < MATRIX_SIZE)
             {
+                this->selected_tile = area_matrix[cursor_x][cursor_y];
                 if (area_matrix[cursor_x][cursor_y]->child.has_value() && !event_handled)
                 {
                     static_cast<GOTree*>(area_matrix[cursor_x][cursor_y]->child.value())->handle(receive_item_callback, player);
