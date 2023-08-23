@@ -1,4 +1,4 @@
-#include "include/Player.hpp"
+#include "../include/player/Player.hpp"
 
 Player::Player(unsigned int max_life, unsigned int max_hunger, unsigned int max_thirst) 
     : max_life(max_life), max_hunger(max_hunger), max_thirst(max_thirst), \

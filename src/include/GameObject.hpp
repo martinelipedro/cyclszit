@@ -5,9 +5,8 @@
 #include <functional>
 
 #include "Spritesheet.hpp"
-#include "constants.hpp"
 #include "WorldRenderer.hpp"
-#include "event_callbacks.hpp"
+#include "player/player_event_callbacks.hpp"
 
 enum class GameObjectType
 {

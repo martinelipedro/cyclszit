@@ -3,7 +3,7 @@
 
 #include "Window.hpp"
 #include "WorldController.hpp"
-#include "Player.hpp"
+#include "player/Player.hpp"
 #include "UI.hpp"
 
 #include <SDL2/SDL_ttf.h>
@@ -15,15 +15,13 @@ private:
     SDL_Event event;
     WorldController* world;
     Player* player;
-    UIFStatusBar* status_bar;
-    UIManager* ui_manager;
 
     void initialize();
-    void initialize_window();
 
     void main_loop();
     void update();
     void draw();
+    void destroy();
 public:
     void run();
 };

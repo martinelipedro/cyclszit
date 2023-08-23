@@ -4,7 +4,6 @@
 #include "Spritesheet.hpp"
 #include "defs.hpp"
 #include <SDL2/SDL.h>
-#include "constants.hpp"
 #include <optional>
 #include <array>
 

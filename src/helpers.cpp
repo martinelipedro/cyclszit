@@ -1,5 +1,4 @@
 #include "include/helpers.hpp"
-#include "include/constants.hpp"
 #include "include/defs.hpp"
 
 SDL_Point* get_absolute_position(int x, int y)

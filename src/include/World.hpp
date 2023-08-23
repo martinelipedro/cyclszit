@@ -2,8 +2,7 @@
 #define _WORLD_HPP
 
 #include <optional>
-#include "constants.hpp"
-#include "Player.hpp"
+#include "player/Player.hpp"
 #include "defs.hpp"
 #include <SDL2/SDL.h>
 #include <array>

@@ -1,7 +1,7 @@
 #ifndef _PLAYER_PROTOCOLS_HPP
 #define _PLAYER_PROTOCOLS_HPP
 
-#include "Item.hpp"
+#include "../Item.hpp"
 
 #include <vector>
 

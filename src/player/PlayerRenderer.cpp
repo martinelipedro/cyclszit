@@ -1,5 +1,5 @@
-#include "include/PlayerRenderer.hpp"
-#include "include/helpers.hpp"
+#include "../include/player/PlayerRenderer.hpp"
+#include "../include/helpers.hpp"
 
 void PlayerRenderer::draw(SDL_Surface* surface, int x, int y)
 {

@@ -4,16 +4,18 @@
 #include "World.hpp"
 #include "WorldRenderer.hpp"
 
+#include <memory>
+
 class WorldController
 {
 private:
     std::array<std::array<WorldTile*, MATRIX_SIZE>, MATRIX_SIZE> area_matrix;
 public:
     std::optional<WorldTile*> selected_tile;
+    std::unique_ptr<WorldRenderer> renderer;
 
-    WorldRenderer* renderer;
 
-    WorldController(SDL_Surface* get_window_surface);
+    WorldController(SDL_Surface* window_surface);
     // TODO: generate world chunks randomly
     void populate_matrix();
     void reset_selected();

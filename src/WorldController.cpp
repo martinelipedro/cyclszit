@@ -6,7 +6,7 @@
 
 WorldController::WorldController(SDL_Surface* window_surface)
 {
-    this->renderer = new WorldRenderer(window_surface);
+    this->renderer = std::make_unique<WorldRenderer>(WorldRenderer(window_surface));
     this->selected_tile = std::nullopt;
 }
 
@@ -74,34 +74,29 @@ void WorldController::mark_tile_for_construction()
 
 void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player)
 {
-    bool event_handled = false;
+    bool handled = false;
     this->reset_selected();
-    for (auto& _ : area_matrix)
-    {   
-        for (auto& tile : _)
+
+    SDL_Point* position = get_relative_position(mouse_position.x, mouse_position.y);
+    
+    if (position->y >= 0 && position->y < MATRIX_SIZE && position->x >= 0 && position->x < MATRIX_SIZE)
+    {
+        this->selected_tile = area_matrix[position->x][position->y];
+        if (area_matrix[position->x][position->y]->child.has_value() && !handled)
         {
-            SDL_Point* position = get_relative_position(mouse_position.x, mouse_position.y);
-            
-            if (position->y >= 0 && position->y < MATRIX_SIZE && position->x >= 0 && position->x < MATRIX_SIZE)
-            {
-                this->selected_tile = area_matrix[position->x][position->y];
-                if (area_matrix[position->x][position->y]->child.has_value() && !event_handled)
-                {
-                    static_cast<GOTree*>(area_matrix[position->x][position->y]->child.value())->handle(receive_item_callback, player);
-                    event_handled = true;
-                }
-                area_matrix[position->x][position->y]->type = TileType::SELECTED_GRASS_DIRT;
-                if (position->y < MATRIX_SIZE - 1)
-                {
-                    area_matrix[position->x][position->y + 1]->type = TileType::SELECTED_RIGHT_GRASS_DIRT;
-                }
-                if (position->x < MATRIX_SIZE - 1)
-                {
-                    area_matrix[position->x + 1][position->y]->type = TileType::SELECTED_LEFT_GRASS_DIRT;
-                }  
-            }   
+            static_cast<GOTree*>(area_matrix[position->x][position->y]->child.value())->handle(receive_item_callback, player);
+            handled = true;
         }
-    }  
+        area_matrix[position->x][position->y]->type = TileType::SELECTED_GRASS_DIRT;
+        if (position->y < MATRIX_SIZE - 1)
+        {
+            area_matrix[position->x][position->y + 1]->type = TileType::SELECTED_RIGHT_GRASS_DIRT;
+        }
+        if (position->x < MATRIX_SIZE - 1)
+        {
+            area_matrix[position->x + 1][position->y]->type = TileType::SELECTED_LEFT_GRASS_DIRT;
+        }  
+    }   
 }
 
 void WorldController::draw()

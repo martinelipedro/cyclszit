@@ -2,7 +2,7 @@
 #include "include/GameObject.hpp"
 
 WorldRenderer::WorldRenderer(SDL_Surface* window_surface) 
-    : window_surface(window_surface), spritesheet(new Spritesheet(constants::path_terrain_tileset, 128, 128)) {}
+    : window_surface(window_surface), spritesheet(new Spritesheet(PATH_TERRAIN_TILESET, 128, 128)) {}
 
 
 void WorldRenderer::select_sprite(TileType type)
