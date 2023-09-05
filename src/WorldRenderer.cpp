@@ -25,7 +25,7 @@ void WorldRenderer::draw(std::array<std::array<WorldTile*, MATRIX_SIZE>, MATRIX_
         for (auto& tile : _)
         {
             this->select_sprite(tile->type);
-            SDL_Rect* draw_rect = new SDL_Rect{tile->absolute_position->x, tile->absolute_position->y, 0, 0};
+            SDL_Rect* draw_rect = new SDL_Rect{tile->absolute_position.x, tile->absolute_position.y, 0, 0};
             this->spritesheet->draw_selected(window_surface, draw_rect);
 
             delete draw_rect;

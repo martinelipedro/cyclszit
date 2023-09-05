@@ -2,6 +2,8 @@
 #include "include/helpers.hpp"
 #include "include/defs.hpp"
 
+#include "include/vector2.hpp"
+
 #define SDL_INITIALIZATION_FLAGS SDL_INIT_VIDEO
 
 void Application::run()

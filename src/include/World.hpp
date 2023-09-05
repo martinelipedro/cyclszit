@@ -5,14 +5,7 @@
 #include "defs.hpp"
 #include <SDL2/SDL.h>
 #include <array>
-
-
-class GameObject;
-enum class GameObjectType;
-class GOTree;
-
-class ConstructionTile;
-class CraftingTile;
+#include "vector2.hpp"
 
 // Name: [selected]?, [selected_side]?, [shape]?, [top], [down]
 enum class TileType
@@ -29,8 +22,8 @@ enum class TileType
 struct WorldTile
 {
     TileType type;
-    SDL_Point* relative_position;
-    SDL_Point* absolute_position;
+    Vec2<int> relative_position;
+    Vec2<int> absolute_position;
 };
 
 #endif

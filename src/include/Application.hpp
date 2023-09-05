@@ -3,7 +3,6 @@
 
 #include "Window.hpp"
 #include "WorldController.hpp"
-#include "UI.hpp"
 
 #include <SDL2/SDL_ttf.h>
 
