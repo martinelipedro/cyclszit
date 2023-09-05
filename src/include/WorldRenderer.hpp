@@ -7,8 +7,6 @@
 #include <optional>
 #include <array>
 
-
-
 #include "World.hpp"
 
 

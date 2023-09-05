@@ -1,5 +1,4 @@
 #include "include/WorldController.hpp"
-#include "include/GameObject.hpp"
 #include <iostream>
 
 #include "include/helpers.hpp"
@@ -21,15 +20,10 @@ void WorldController::populate_matrix()
                 TileType::GRASS_DIRT,
                 new SDL_Point{i, j},
                 get_absolute_position(i, j),
-                std::nullopt,
-                std::nullopt,
-                std::nullopt
             };
             this->area_matrix[i][j] = tile;
         }
     }
-
-    this->area_matrix[1][1]->child = new GOTree(GameObjectType::Tree, this->area_matrix[1][1]);
 }
 
 void WorldController::reset_selected()
@@ -56,10 +50,7 @@ void WorldController::mark_tile_for_construction()
 {
     if (!this->selected_tile.has_value())
         return;
-    
-    if (this->selected_tile.value()->child.has_value())
-        return;
-    
+
     SDL_Point* relative_position = this->selected_tile.value()->relative_position;
     this->area_matrix[relative_position->x][relative_position->y]->type = TileType::CONSTRUCTION_GRASS_DIRT;
     if (relative_position->y < MATRIX_SIZE - 1)
@@ -72,7 +63,7 @@ void WorldController::mark_tile_for_construction()
     }  
 }
 
-void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player)
+void WorldController::check_mouse_click(SDL_Point mouse_position)
 {
     this->reset_selected();
 
@@ -81,10 +72,11 @@ void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player
     if (position->y >= 0 && position->y < MATRIX_SIZE && position->x >= 0 && position->x < MATRIX_SIZE)
     {
         this->selected_tile = area_matrix[position->x][position->y];
-        if (area_matrix[position->x][position->y]->child.has_value())
-        {
-            static_cast<GOTree*>(area_matrix[position->x][position->y]->child.value())->handle(receive_item_callback, player);
-        }
+        // if (area_matrix[position->x][position->y]->child.has_value())
+        // {
+        //     static_cast<GOTree*>(area_matrix[position->x][position->y]->child.value())->handle(receive_item_callback, player);
+        // }
+
         area_matrix[position->x][position->y]->type = TileType::SELECTED_GRASS_DIRT;
         if (position->y < MATRIX_SIZE - 1)
         {

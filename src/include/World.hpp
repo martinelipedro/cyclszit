@@ -2,7 +2,6 @@
 #define _WORLD_HPP
 
 #include <optional>
-#include "player/Player.hpp"
 #include "defs.hpp"
 #include <SDL2/SDL.h>
 #include <array>
@@ -32,11 +31,6 @@ struct WorldTile
     TileType type;
     SDL_Point* relative_position;
     SDL_Point* absolute_position;
-    std::optional<GameObject*> child;
-    std::optional<ConstructionTile*> construction_tile;
-    std::optional<CraftingTile*> crafting_tile;
 };
-
-
 
 #endif

@@ -16,7 +16,6 @@ void Application::initialize()
     this->game_window = new Window(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     this->world = new WorldController(this->game_window->get_window_surface());
     this->world->populate_matrix();
-    this->player = new Player(100, 100, 100);
 }
 
 void Application::main_loop()
@@ -47,7 +46,7 @@ void Application::update()
             {
                 if (event.button.button == SDL_BUTTON_LEFT)
                 {
-                    world->check_mouse_click({mouse_x, mouse_y}, this->player);
+                    world->check_mouse_click({mouse_x, mouse_y});
                 }
                 break;                
             }
@@ -75,5 +74,4 @@ void Application::destroy()
 {
     delete this->game_window;
     delete this->world;
-    delete this->player;
 }

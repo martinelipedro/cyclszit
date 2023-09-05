@@ -1,5 +1,4 @@
 #include "include/WorldRenderer.hpp"
-#include "include/GameObject.hpp"
 
 WorldRenderer::WorldRenderer(SDL_Surface* window_surface) 
     : window_surface(window_surface), spritesheet(new Spritesheet(PATH_TERRAIN_TILESET, 128, 128)) {}
@@ -28,10 +27,6 @@ void WorldRenderer::draw(std::array<std::array<WorldTile*, MATRIX_SIZE>, MATRIX_
             this->select_sprite(tile->type);
             SDL_Rect* draw_rect = new SDL_Rect{tile->absolute_position->x, tile->absolute_position->y, 0, 0};
             this->spritesheet->draw_selected(window_surface, draw_rect);
-            if (tile->child.has_value())
-            {
-                tile->child.value()->draw(window_surface, this->spritesheet);
-            }
 
             delete draw_rect;
         }

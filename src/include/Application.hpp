@@ -3,7 +3,6 @@
 
 #include "Window.hpp"
 #include "WorldController.hpp"
-#include "player/Player.hpp"
 #include "UI.hpp"
 
 #include <SDL2/SDL_ttf.h>
@@ -14,7 +13,6 @@ private:
     Window* game_window;
     SDL_Event event;
     WorldController* world;
-    Player* player;
 
     void initialize();
 
