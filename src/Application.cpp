@@ -67,7 +67,6 @@ void Application::draw()
 {
     SDL_FillRect(this->game_window->get_window_surface(), NULL, color_from_rgb(83, 93, 94, 255));
     this->world->draw();
-    SDL_Rect* t_rect = new SDL_Rect{300, 300, 0, 0};
 
     SDL_UpdateWindowSurface(this->game_window->get_object());
 }

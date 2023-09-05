@@ -14,11 +14,9 @@ public:
     int player_y;
     PlayerRenderer* renderer;
 public:
-    PlayerInventory* inventory;
+    PlayerInventory inventory;
     Player(unsigned int max_life, unsigned int max_hunger, unsigned int max_thist);
     void draw(SDL_Surface* screen_surface);
-
 };
-
 
 #endif

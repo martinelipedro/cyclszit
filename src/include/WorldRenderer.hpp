@@ -21,7 +21,6 @@ private:
     void select_sprite(TileType type);
 public:
     WorldRenderer(SDL_Surface* window_surface);
-
     void draw(std::array<std::array<WorldTile*, MATRIX_SIZE>, MATRIX_SIZE> area_matrix);
 };
 

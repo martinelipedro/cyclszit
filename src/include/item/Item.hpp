@@ -6,10 +6,15 @@ enum class ItemType
     WOOD,
 };
 
-struct ItemStack
+struct ItemFrame
 {
     ItemType type;
     unsigned int quantity;
+};
+
+struct ItemStack
+{
+    ItemFrame frame;
 
     ItemStack(ItemType type, unsigned int quantity);
 

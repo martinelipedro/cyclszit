@@ -74,7 +74,6 @@ void WorldController::mark_tile_for_construction()
 
 void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player)
 {
-    bool handled = false;
     this->reset_selected();
 
     SDL_Point* position = get_relative_position(mouse_position.x, mouse_position.y);
@@ -82,10 +81,9 @@ void WorldController::check_mouse_click(SDL_Point mouse_position, Player* player
     if (position->y >= 0 && position->y < MATRIX_SIZE && position->x >= 0 && position->x < MATRIX_SIZE)
     {
         this->selected_tile = area_matrix[position->x][position->y];
-        if (area_matrix[position->x][position->y]->child.has_value() && !handled)
+        if (area_matrix[position->x][position->y]->child.has_value())
         {
             static_cast<GOTree*>(area_matrix[position->x][position->y]->child.value())->handle(receive_item_callback, player);
-            handled = true;
         }
         area_matrix[position->x][position->y]->type = TileType::SELECTED_GRASS_DIRT;
         if (position->y < MATRIX_SIZE - 1)

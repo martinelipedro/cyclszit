@@ -9,7 +9,7 @@ SDL_Point* get_absolute_position(int x, int y)
 
 SDL_Point* get_relative_position(int x, int y)
 {
-    SDL_Point* position = new SDL_Point{};
+    SDL_Point* position = new SDL_Point;
 
     float sx = x - WORLD_OFFSET_X;
     float sy = y - WORLD_OFFSET_Y;
