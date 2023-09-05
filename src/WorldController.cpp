@@ -9,6 +9,49 @@ WorldController::WorldController(SDL_Surface* window_surface)
     this->selected_tile = std::nullopt;
 }
 
+bool WorldController::selected_tile_exists() const
+{
+    return this->selected_tile.has_value();
+}
+
+SDL_Point* WorldController::get_selected_tile_relative_position() const
+{
+    return this->selected_tile.value()->relative_position;
+}
+
+void WorldController::set_tile_type_and_adjacents(WorldTile* tile, TileType type)
+{
+    SDL_Point* relative_position = tile->relative_position;
+    this->area_matrix[relative_position->x][relative_position->y]->type = type;
+    if (relative_position->y < MATRIX_SIZE - 1)
+    {
+        area_matrix[relative_position->x][relative_position->y + 1]->type = static_cast<TileType>(static_cast<int>(type) + 2);
+    }
+    if (relative_position->x < MATRIX_SIZE - 1)
+    {
+        area_matrix[relative_position->x + 1][relative_position->y]->type = static_cast<TileType>(static_cast<int>(type) + 1);
+    }  
+}
+
+void WorldController::clear_tile_type(WorldTile* tile)
+{   
+    SDL_Point* relative_position = tile->relative_position;
+    this->area_matrix[relative_position->x][relative_position->y]->type = TileType::GRASS_DIRT;
+    if (relative_position->y < MATRIX_SIZE - 1)
+    {
+        area_matrix[relative_position->x][relative_position->y + 1]->type = TileType::GRASS_DIRT;
+    }
+    if (relative_position->x < MATRIX_SIZE - 1)
+    {
+        area_matrix[relative_position->x + 1][relative_position->y]->type = TileType::GRASS_DIRT;
+    }  
+}
+
+bool WorldController::is_point_inside_area(SDL_Point* point) const
+{
+    return point->y >= 0 && point->y < MATRIX_SIZE && point->x >= 0 && point->x < MATRIX_SIZE;
+}
+
 // TODO: generate world chunks randomly
 void WorldController::populate_matrix()
 {
@@ -28,65 +71,35 @@ void WorldController::populate_matrix()
 
 void WorldController::reset_selected()
 {
-    if (!this->selected_tile.has_value())
+    if (!this->selected_tile_exists())
         return;
 
-    SDL_Point* relative_position = this->selected_tile.value()->relative_position;
+    SDL_Point* relative_position = this->get_selected_tile_relative_position();
     if (this->area_matrix[relative_position->x][relative_position->y]->type != TileType::SELECTED_GRASS_DIRT)
         return;
 
-    this->area_matrix[relative_position->x][relative_position->y]->type = TileType::GRASS_DIRT;
-    if (relative_position->y < MATRIX_SIZE - 1)
-    {
-        area_matrix[relative_position->x][relative_position->y + 1]->type = TileType::GRASS_DIRT;
-    }
-    if (relative_position->x < MATRIX_SIZE - 1)
-    {
-        area_matrix[relative_position->x + 1][relative_position->y]->type = TileType::GRASS_DIRT;
-    }  
+    this->clear_tile_type(this->selected_tile.value());
+    this->selected_tile = std::nullopt;
 }
 
 void WorldController::mark_tile_for_construction()
 {
-    if (!this->selected_tile.has_value())
+    if (!this->selected_tile_exists())
         return;
 
-    SDL_Point* relative_position = this->selected_tile.value()->relative_position;
-    this->area_matrix[relative_position->x][relative_position->y]->type = TileType::CONSTRUCTION_GRASS_DIRT;
-    if (relative_position->y < MATRIX_SIZE - 1)
-    {
-        area_matrix[relative_position->x][relative_position->y + 1]->type = TileType::CONSTRUCTION_RIGHT_GRASS_DIRT;
-    }
-    if (relative_position->x < MATRIX_SIZE - 1)
-    {
-        area_matrix[relative_position->x + 1][relative_position->y]->type = TileType::CONSTRUCTION_LEFT_GRASS_DIRT;
-    }  
+    this->set_tile_type_and_adjacents(this->selected_tile.value(), TileType::CONSTRUCTION_GRASS_DIRT);
 }
 
 void WorldController::check_mouse_click(SDL_Point mouse_position)
 {
     this->reset_selected();
-
-    SDL_Point* position = get_relative_position(mouse_position.x, mouse_position.y);
+    SDL_Point* relative_mouse_position = get_relative_position(mouse_position.x, mouse_position.y);
     
-    if (position->y >= 0 && position->y < MATRIX_SIZE && position->x >= 0 && position->x < MATRIX_SIZE)
-    {
-        this->selected_tile = area_matrix[position->x][position->y];
-        // if (area_matrix[position->x][position->y]->child.has_value())
-        // {
-        //     static_cast<GOTree*>(area_matrix[position->x][position->y]->child.value())->handle(receive_item_callback, player);
-        // }
+    if (!this->is_point_inside_area(relative_mouse_position))
+        return;
 
-        area_matrix[position->x][position->y]->type = TileType::SELECTED_GRASS_DIRT;
-        if (position->y < MATRIX_SIZE - 1)
-        {
-            area_matrix[position->x][position->y + 1]->type = TileType::SELECTED_RIGHT_GRASS_DIRT;
-        }
-        if (position->x < MATRIX_SIZE - 1)
-        {
-            area_matrix[position->x + 1][position->y]->type = TileType::SELECTED_LEFT_GRASS_DIRT;
-        }  
-    }   
+    this->selected_tile = area_matrix[relative_mouse_position->x][relative_mouse_position->y];
+    this->set_tile_type_and_adjacents(this->selected_tile.value(), TileType::SELECTED_GRASS_DIRT);
 }
 
 void WorldController::draw()

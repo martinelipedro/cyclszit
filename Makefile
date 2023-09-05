@@ -9,7 +9,7 @@ LIBS = -lSDL2 -lSDL2_ttf
 
 BIN_DIR = ./bin
 
-.PHONY: all clean exe
+.PHONY: clean exe
 
 all: ${OBJECTS} ${HEADERS}
 	g++ $(BIN_DIR)/*.o -o $(BIN_DIR)/$(EXE_NAME) $(LIBS)
